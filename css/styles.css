@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: Inter;
+}
+
+/* Скрываем калькулятор на экранах шириной больше 768px */
+@media (min-width: 769px) {
+  body {
+    display: none; /* Полное скрытие всего контента */
+  }
+}
+
+/* Стили для экранов шириной 768px и меньше */
+@media (max-width: 768px) {
+  body {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    border: none; /* Убираем границы, если не нужны */
+    background-color: beige;
+  }
+
+  .display {
+    width: calc(100% - 20px); /* Ширина с учетом отступа */
+    height: 80px;
+    margin: 20px auto; /* Центрирование с отступом */
+    padding-left: 10px; /* Отступ слева */
+    font-size: 60px;
+    box-sizing: border-box; /* Учитывать отступ в ширине */
+    border: 1px solid #ccc; /* Добавьте границу, если нужно */
+    border-radius: 8px; /* Края с радиусом */
+    color: rgb(129, 73, 0);
+    border: 1px solid sienna;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .btn {
+    font-size: 80px;
+    height: 117px;
+    border-radius: 8px;
+    background-color: rgb(255, 229, 194);
+    color: rgb(129, 73, 0);
+    border: 1px solid sienna;
+  }
+
+  .btn-clean {
+    background-color: rgb(255, 204, 162);
+  }
+
+  .btn:hover {
+    box-shadow: rgba(255, 200, 148, 0.993) 0px 30px 60px -12px inset,
+      rgb(172, 171, 171) 0px 18px 36px -18px inset;
+  }
+}
