@@ -1,56 +1,106 @@
-let currentInput = ""; // Хранит текущий ввод
-let operation = ""; // Хранит выбранную операцию
-let expression = ""; // Хранит все введенные числа и операции
+let currentInput = "";
+let operation = "";
+let expression = "";
 
-// Функция для добавления числа в текущий ввод
 function appendNumber(number) {
-  currentInput += number; // Добавляем нажатую цифру к текущему вводу
-  updateDisplay(); // Обновляем отображение на экране
+  if (number === "." && currentInput.includes(".")) return;
+
+  if (currentInput === "0" && number !== ".") currentInput = "";
+
+  currentInput += number;
+  updateDisplay();
 }
 
-// Функция для установки операции
 function setOperation(op) {
-  if (currentInput === "") return; // Если текущий ввод пуст, выходим из функции
-  expression += currentInput + " " + op + " "; // Добавляем текущее число и операцию в выражение
-  operation = op; // Сохраняем операцию
-  currentInput = ""; // Очищаем текущий ввод для следующего числа
-  updateDisplay(); // Обновляем дисплей после установки операции
-}
+  if (currentInput === "" && expression === "") return;
 
-// Функция для вычисления результата
-function calculateResult() {
-  if (currentInput === "") return; // Если текущий ввод пуст, выходим из функции
-  expression += currentInput; // Добавляем последнее число в выражение
+  if (currentInput !== "") {
+    expression += currentInput + " " + op + " ";
+    currentInput = "";
+  } else if (expression.length > 0) {
+    const trimmedExpression = expression.trim();
+    const lastChar = trimmedExpression.slice(-1);
 
-  try {
-    // Проверяем на деление на ноль
-    if (expression.includes("÷ 0") || expression.includes("/ 0")) {
-      currentInput = "Error"; // Если есть деление на ноль, выводим сообщение об ошибке
+    if (!["+", "-", "*", "/"].includes(lastChar)) {
+      expression = trimmedExpression + " " + op + " ";
     } else {
-      // Вычисляем результат с помощью eval (или другого безопасного метода)
-      const result = eval(expression.replace(/×/g, "*").replace(/÷/g, "/"));
-      currentInput = result.toString(); // Обновляем текущий ввод результатом
+      expression = trimmedExpression.slice(0, -1) + " " + op + " ";
     }
-  } catch (error) {
-    currentInput = "Error"; // Обработка ошибок
   }
 
-  operation = ""; // Очищаем операцию
-  expression = ""; // Очищаем выражение
-  updateDisplay(); // Обновляем отображение на экране
+  updateDisplay();
 }
 
-// Функция для очистки всех введенных данных
+function calculateResult() {
+  if (currentInput === "" && expression.endsWith(" ")) {
+    expression = expression.trim().slice(0, -1);
+  } else if (currentInput !== "") {
+    expression += currentInput;
+  }
+
+  try {
+    if (/(\D|^)(0\d+)/.test(expression) || /(\.\d*\.)/.test(expression)) {
+      throw new Error("Invalid input format");
+    }
+
+    const result = safeEval(expression);
+    if (result === Infinity || isNaN(result)) {
+      throw new Error("Cannot divide by zero");
+    }
+
+    currentInput = result.toString();
+  } catch (error) {
+    currentInput = "Error";
+  }
+
+  operation = "";
+  expression = "";
+  updateDisplay();
+}
+
 function clearDisplay() {
-  currentInput = ""; // Очищаем текущий ввод
-  operation = ""; // Очищаем операцию
-  expression = ""; // Очищаем выражение
-  updateDisplay(); // Обновляем отображение
+  currentInput = "";
+  operation = "";
+  expression = "";
+  updateDisplay();
 }
 
-// Функция для обновления отображения на экране
-function updateDisplay() {
-  // Формируем строку для отображения: текущее выражение + текущее число
-  let displayValue = expression + (currentInput ? currentInput : "");
-  document.getElementById("display").value = displayValue; // Устанавливаем значение в поле ввода
+function backspace() {
+  if (currentInput.length > 0) {
+    currentInput = currentInput.slice(0, -1);
+  } else if (expression.length > 0) {
+    expression = expression.slice(0, -1).trim();
+  }
+  updateDisplay();
 }
+
+function updateDisplay() {
+  let displayValue = expression + (currentInput ? currentInput : "");
+  const display = document.getElementById("display");
+  display.value = displayValue;
+  display.scrollLeft = display.scrollWidth;
+}
+
+function safeEval(expr) {
+  const sanitizedExpr = expr
+    .replace(/×/g, "*")
+    .replace(/÷/g, "/")
+    .replace(/[^0-9+\-*/(). ]/g, "");
+
+  return Function('"use strict"; return (' + sanitizedExpr + ")")();
+}
+
+document.addEventListener("keydown", (event) => {
+  const key = event.key;
+  if (!isNaN(key) || key === ".") {
+    appendNumber(key);
+  } else if (["+", "-", "*", "/"].includes(key)) {
+    setOperation(key);
+  } else if (key === "Enter") {
+    calculateResult();
+  } else if (key === "Backspace") {
+    backspace();
+  } else if (key === "Escape") {
+    clearDisplay();
+  }
+});

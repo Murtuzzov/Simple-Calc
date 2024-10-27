@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Простой калькулятор</title>
     <link rel="stylesheet" href="./css/styles.css" />
-    <!-- Подключаем внешний CSS файл -->
   </head>
   <body>
     <input class="display" id="display" type="text" disabled />
@@ -25,7 +24,12 @@
       <button class="btn" onclick="appendNumber('9')">9</button>
       <button class="btn" onclick="setOperation('×')">×</button>
 
-      <button class="btn btn-clean" onclick="clearDisplay()">C</button>
+      <div class="btn-double">
+        <button class="btn-backspace" onclick="backspace()">←</button>
+        <button class="btn-dot" onclick="appendNumber('.')">.</button>
+        <button class="btn-clear" onclick="clearDisplay()">C</button>
+      </div>
+
       <button class="btn" onclick="appendNumber('0')">0</button>
       <button class="btn" onclick="calculateResult()">=</button>
       <button class="btn" onclick="setOperation('÷')">÷</button>

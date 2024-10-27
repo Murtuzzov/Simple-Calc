@@ -1,17 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap");
 
 * {
-  font-family: Inter;
+  font-family: Inter, sans-serif;
 }
 
-/* Скрываем калькулятор на экранах шириной больше 768px */
 @media (min-width: 769px) {
   body {
-    display: none; /* Полное скрытие всего контента */
+    display: none;
   }
 }
 
-/* Стили для экранов шириной 768px и меньше */
 @media (max-width: 768px) {
   body {
     max-width: 100%;
@@ -20,44 +18,110 @@
     margin: 0;
     padding: 0;
     text-align: center;
-    border: none; /* Убираем границы, если не нужны */
-    background-color: beige;
+    background-color: #faf1dc; /* Beige background */
   }
 
   .display {
-    width: calc(100% - 20px); /* Ширина с учетом отступа */
+    width: calc(100% - 20px);
     height: 80px;
-    margin: 20px auto; /* Центрирование с отступом */
-    padding-left: 10px; /* Отступ слева */
+    margin: 20px auto;
+    padding-left: 10px;
     font-size: 60px;
-    box-sizing: border-box; /* Учитывать отступ в ширине */
-    border: 1px solid #ccc; /* Добавьте границу, если нужно */
-    border-radius: 8px; /* Края с радиусом */
-    color: rgb(129, 73, 0);
-    border: 1px solid sienna;
+    line-height: 80px;
+    box-sizing: border-box;
+    border: 1px solid #8b5e3b;
+    border-radius: 8px;
+    color: #8b5e3b;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    text-align: left;
   }
 
   .container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    padding: 0 20px;
   }
 
   .btn {
-    font-size: 80px;
-    height: 117px;
+    font-size: 60px;
+    height: 100px;
     border-radius: 8px;
-    background-color: rgb(255, 229, 194);
-    color: rgb(129, 73, 0);
-    border: 1px solid sienna;
+    background-color: #ffdeb9;
+    color: #8b5e3b;
+    border: 1px solid #8b5e3b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
-  .btn-clean {
-    background-color: rgb(255, 204, 162);
+  .btn-double {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr 1fr;
+    height: 100px;
+    gap: 5px; /* Добавляем отступы между кнопками */
   }
 
-  .btn:hover {
-    box-shadow: rgba(255, 200, 148, 0.993) 0px 30px 60px -12px inset,
-      rgb(172, 171, 171) 0px 18px 36px -18px inset;
+  .btn-backspace,
+  .btn-dot {
+    font-size: 40px;
+
+    background-color: #ffd2a5;
+    color: #8b5e3b;
+    border: 1px solid #8b5e3b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+
+  .btn-backspace {
+    border-radius: 8px 0 0 0;
+    background-color: #e6ae77;
+    color: #814c10;
+  }
+
+  .btn-dot {
+    background-color: #e6ae77;
+    color: #814c10;
+    border-radius: 0 8px 0 0;
+    border-left: none;
+  }
+
+  .btn-clear {
+    font-size: 40px;
+    grid-column: span 2;
+    background-color: #e6ae77;
+    color: #814c10;
+    border: 1px solid #8b5e3b;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+}
+
+@media (max-width: 330px) {
+  .display {
+    font-size: 40px;
+    height: 60px;
+    line-height: 60px;
+  }
+
+  .btn,
+  .btn-backspace,
+  .btn-dot,
+  .btn-clear {
+    font-size: 50px;
+    height: 80px;
+  }
+
+  .container {
+    padding: 0 10px;
   }
 }
