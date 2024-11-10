@@ -71,7 +71,7 @@
 
     background-color: #ffd2a5;
     color: #8b5e3b;
-    border: 1px solid #8b5e3b;
+    border: 3px solid #8b5e3b;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,7 +88,6 @@
     background-color: #e6ae77;
     color: #814c10;
     border-radius: 0 8px 0 0;
-    border-left: none;
   }
 
   .btn-clear {
@@ -96,8 +95,7 @@
     grid-column: span 2;
     background-color: #e6ae77;
     color: #814c10;
-    border: 1px solid #8b5e3b;
-    border-top: none;
+    border: 3px solid #8b5e3b;
     border-radius: 0 0 8px 8px;
     display: flex;
     justify-content: center;
